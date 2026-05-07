@@ -12,7 +12,7 @@ namespace CoreBreach.Projectiles
         private Vector3 _direction;
         private float _lifetimeTimer;
 
-        public void Initialize(Vector3 direction, float damage)
+        public void Initialize(Vector3 direction, float damage) //does an dependency injection
         {
             _direction = direction.normalized;
             _damage = damage;
@@ -40,7 +40,7 @@ namespace CoreBreach.Projectiles
                 Debug.Log($"[Projectile] gave {other.name} to {_damage} point damages.");
             }
 
-            Destroy(gameObject);
+            Destroy(gameObject); //maybe improve this
         }
     }
 }
