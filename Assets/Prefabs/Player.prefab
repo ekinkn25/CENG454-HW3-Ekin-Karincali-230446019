@@ -14,9 +14,12 @@ GameObject:
   - component: {fileID: 4176809813060720971}
   - component: {fileID: 1469953001669912275}
   - component: {fileID: 317565612560149050}
+  - component: {fileID: -6562514256065280123}
+  - component: {fileID: 914767327168019722}
+  - component: {fileID: 8878722307979588767}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +158,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Player.PlayerMovement
   moveSpeed: 100
+--- !u!114 &-6562514256065280123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394042604574671148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4cdbb3bb0a3fa429e301560b3f01f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Player.BasicWeapon
+  projectilePrefab: {fileID: 6848301852481536085, guid: b83a45294295cfd4dafa542218e6c95f, type: 3}
+  fireRate: 0.3
+--- !u!114 &914767327168019722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394042604574671148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4cdbb3bb0a3fa429e301560b3f01f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Player.BasicWeapon
+  projectilePrefab: {fileID: 6848301852481536085, guid: b83a45294295cfd4dafa542218e6c95f, type: 3}
+  fireRate: 0.3
+--- !u!114 &8878722307979588767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394042604574671148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f7851b433a64b4f955e8becd309c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Player.PlayerShooter
+  basicWeapon: {fileID: 914767327168019722}
 --- !u!1 &6905683540940465344
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,13 +226,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6905683540940465344}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 0, y: 0.8000001, z: -8.666667}
+  m_LocalRotation: {x: 0.13948923, y: -0, z: -0, w: 0.9902236}
+  m_LocalPosition: {x: 0, y: 2.99, z: -8.280004}
   m_LocalScale: {x: 0.06666667, y: 0.06666666, z: 0.06666666}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1477331296735266735}
-  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 16.037, y: 0, z: 0}
 --- !u!20 &5656781215302316863
 Camera:
   m_ObjectHideFlags: 0
