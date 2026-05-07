@@ -535,17 +535,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 394042604574671148, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 1477331296735266735, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1477331296735266735, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1477331296735266735, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -582,46 +578,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 394042604574671148, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1002937738220037401}
-    - targetCorrespondingSourceObject: {fileID: 394042604574671148, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1002937738220037400}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
---- !u!1 &1002937738220037399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 394042604574671148, guid: ca3d31070b71a7345956bcd63e37ad8b, type: 3}
-  m_PrefabInstance: {fileID: 1002937738220037398}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1002937738220037400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002937738220037399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f7851b433a64b4f955e8becd309c02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Player.PlayerShooter
-  basicWeapon: {fileID: 1002937738220037401}
---- !u!114 &1002937738220037401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002937738220037399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de4cdbb3bb0a3fa429e301560b3f01f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Player.BasicWeapon
-  projectilePrefab: {fileID: 6848301852481536085, guid: b83a45294295cfd4dafa542218e6c95f, type: 3}
-  fireRate: 0.3
 --- !u!1001 &2736066380800722183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -630,13 +588,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 777276500589708132, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 777276500589708132, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 777276500589708132, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 777276500589708132, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1965464983740299695, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.65507
       objectReference: {fileID: 0}
     - target: {fileID: 1965464983740299695, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 12.6
       objectReference: {fileID: 0}
     - target: {fileID: 1965464983740299695, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
       propertyPath: m_LocalPosition.z
