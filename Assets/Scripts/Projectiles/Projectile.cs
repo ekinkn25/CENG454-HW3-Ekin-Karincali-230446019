@@ -32,6 +32,10 @@ namespace CoreBreach.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag("Player")) return;
+
+            Debug.Log($"[Projectile] Çarptı: {other.name} | Tag: {other.tag}");
+
             IDamageable damageable = other.GetComponent<IDamageable>();
 
             if (damageable != null)
