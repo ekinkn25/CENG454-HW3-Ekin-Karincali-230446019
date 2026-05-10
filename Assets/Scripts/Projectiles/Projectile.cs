@@ -42,12 +42,17 @@ namespace CoreBreach.Projectiles
         {
             if (other.CompareTag("Player")) return;
 
-            Debug.Log($"[Projectile] Çarptı: {other.name} | Tag: {other.tag}");
+            Debug.Log($"[Projectile] Hitted: {other.name} | Tag: {other.tag}");
 
             IDamageable damageable = other.GetComponent<IDamageable>();
 
             if (damageable != null)
             {
+                if (damageable.IsDead())
+                {
+                    Destroy(gameObject); //TODO: replace with pool return
+                    return;
+                }
                 damageable.TakeDamage(_damage);
                 Debug.Log($"[Projectile] gave {other.name} to {_damage} point damages.");
             }

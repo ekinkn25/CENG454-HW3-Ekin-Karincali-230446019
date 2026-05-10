@@ -24,7 +24,7 @@ namespace CoreBreach.Core
 
         public void TakeDamage(float amount)
         {
-            if (IsDead()) return;
+            if (_isDead) return;
 
             currentHealth -= amount;
             currentHealth = Mathf.Max(currentHealth, 0f);
