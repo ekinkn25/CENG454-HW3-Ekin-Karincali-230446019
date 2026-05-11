@@ -6,7 +6,7 @@ namespace CoreBreach.Enemies
     //strategy pattern - straight movement
     //EnemyController dont know this class directly just know on the interface of IEnemyMovement 
     //you dont have to change this class to add new strategy
-    public class DirectMoveStrategy : MonoBehaviour
+    public class DirectMoveStrategy : IEnemyMovementStrategy
     {
         private readonly float _speed;
 
