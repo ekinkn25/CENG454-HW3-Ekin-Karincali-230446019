@@ -8,6 +8,12 @@ namespace CoreBreach.Patterns.Observer
     //when something happens, it will reported here and listeners reacts
     public static class GameEvents
     {
+
+        // Oyunun bitip bitmediğini tutan global bayrak
+        // TODO: Phase 8 — GameManager bu flag'i yönetecek
+        public static bool IsGameOver = false;
+
+
         //core events:
 
         //it will get triggered when core get take damage or recover 
@@ -53,6 +59,7 @@ namespace CoreBreach.Patterns.Observer
         //TODO: when we write GameManager, OnEnable can be called inside
         public static void ResetAllEvents()
         {
+            IsGameOver          = false;
             OnCoreHealthChanged = null;
             OnCoreDead          = null;
             OnEnemyDied         = null;
