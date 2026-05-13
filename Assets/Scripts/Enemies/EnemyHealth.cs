@@ -15,7 +15,6 @@ namespace CoreBreach.Enemies
 
         
         //IPoolable -it will call when you pull on pool- life and flag become zero
-        //TODO: ObjectPool system will be implemented later on this project
         //pool manager will call this method automatically
         public void OnSpawn()
         {
@@ -27,7 +26,6 @@ namespace CoreBreach.Enemies
         }
         
         //called when it turneds back to pool 
-        //TODO: when ObejctPool system implemented "Destroy(gameObject)" will be "EnemyPool.Instance.ReturnToPool(this);"
         public void OnDespawn()
         {
             gameObject.SetActive(false);

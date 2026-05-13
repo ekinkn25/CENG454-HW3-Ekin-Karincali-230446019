@@ -65,7 +65,6 @@ namespace CoreBreach.UI
 
         //it will called when OnEnemyDied is triggered
         //HuD dont use Vector3 posiition parameter but it has to comply the event signature
-        //TODO : EnemyHealth yazılınca bu event otomatik gelmeli
         private void HandleEnemyDied(Vector3 position, bool killedByPlayer)
         {
             if (!killedByPlayer) return;
