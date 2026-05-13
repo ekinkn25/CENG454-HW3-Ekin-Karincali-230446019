@@ -55,6 +55,8 @@ namespace CoreBreach.Player
         {
             _weapon = newWeapon;
             Debug.Log($"[PlayerShooter] Silah değiştirildi: {newWeapon.GetType().Name}");
+            // TODO: Decorator gelince sadece SetWeapon(new DoubleDamageDecorator(weapon)) yapılacak, başka hiçbir şey değişmeyecek
+
         }
     }
 }
