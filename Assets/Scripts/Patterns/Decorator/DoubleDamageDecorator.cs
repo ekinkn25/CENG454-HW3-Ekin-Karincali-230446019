@@ -1,16 +1,21 @@
 using UnityEngine;
+using CoreBreach.Interfaces;
 
-public class DoubleDamageDecorator : MonoBehaviour
+namespace CoreBreach.Patterns.Decorator
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // decorator that doubles the damage 
+    //it can be stacked like you can get 2 ow doubleing 
+    public class DoubleDamageDecorator : WeaponDecorator
     {
-        
-    }
+        public DoubleDamageDecorator(IWeaponBehavior wrapped) : base(wrapped)
+        {
+            Debug.Log($"[DoubleDamageDecorator] Aktif. Hasar: {wrapped.GetDamage()} → {wrapped.GetDamage() * 2}");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // just this method is overriding. Fire() comes from WeaponDecorator.
+        public override float GetDamage()
+        {
+            return _wrapped.GetDamage() * 2f;
+        }
     }
 }
