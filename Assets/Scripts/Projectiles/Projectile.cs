@@ -1,6 +1,7 @@
 using UnityEngine;
 using CoreBreach.Interfaces;
 using CoreBreach.Patterns.Observer;
+using CoreBreach.Patterns.Pool;
 
 namespace CoreBreach.Projectiles
 {
@@ -12,7 +13,6 @@ namespace CoreBreach.Projectiles
         [SerializeField] private float lifetime = 3f;
 
         private float _damage;
-        // private Vector3 _direction;
         private float _lifetimeTimer;
         private Rigidbody _rb;
         private Collider  _collider;
@@ -97,13 +97,9 @@ namespace CoreBreach.Projectiles
             ReturnToPool();
         }
 
-        // TODO: Phase 6.2 — ProjectilePool yazılınca
-        //       Destroy satırını şununla değiştir:
-        //       ProjectilePool.Instance.ReturnToPool(this);
         private void ReturnToPool()
         {
-            // TODO: Phase 6.2 sonrası bu satır kaldırılacak
-            Destroy(gameObject);
+            ProjectilePool.Instance.ReturnToPool(this);
         }
     }
 }
