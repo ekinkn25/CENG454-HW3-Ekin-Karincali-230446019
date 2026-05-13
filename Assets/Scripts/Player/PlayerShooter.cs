@@ -58,5 +58,9 @@ namespace CoreBreach.Player
             // TODO: Decorator gelince sadece SetWeapon(new DoubleDamageDecorator(weapon)) yapılacak, başka hiçbir şey değişmeyecek
 
         }
+        public IWeaponBehavior GetCurrentWeapon()
+        {
+            return _weapon;
+        }
     }
 }
