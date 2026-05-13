@@ -15,7 +15,7 @@ namespace CoreBreach.Patterns.Pool
 
         private void Awake()
         {
-            //checking if it hasv two destroy the second
+            //checking if it has two if it does destroy the second
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
