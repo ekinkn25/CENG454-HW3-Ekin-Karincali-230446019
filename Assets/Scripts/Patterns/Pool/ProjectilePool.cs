@@ -35,7 +35,8 @@ namespace CoreBreach.Patterns.Pool
                 p.OnDespawn();
                 _pool.Enqueue(p);
             }
-            Debug.Log($"[ProjectilePool] you started with {poolSize} projectiles.");
+            Debug.Log($"[ProjectilePool] you started with {poolSize} projectiles and they are on wait-list.");
+
         }
 
         //get projectile from pool, use if there is a projectile in queue and if dont have projectile in queue make a new one

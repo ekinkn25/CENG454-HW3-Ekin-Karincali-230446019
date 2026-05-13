@@ -10,6 +10,8 @@ namespace CoreBreach.Enemies
         [SerializeField] private float maxHealth=30f;
         [SerializeField] private float currentHealth;
         private bool _isDead = false; // to prevent 2nd die event
+        private bool _killedByPlayer  = false;
+
 
         
         //IPoolable -it will call when you pull on pool- life and flag become zero
@@ -57,12 +59,20 @@ namespace CoreBreach.Enemies
             Debug.Log($"[EnemyHealth] Enemy died: {gameObject.name}");
 
             //OBSERVER: WaveManager kalan düşman sayısını azaltır Score MAnager puan ekler HUDController Score günceller ama bu sınıf onların hiç birini tanımıypr sadece duyuruyor
-            GameEvents.OnEnemyDied?.Invoke(transform.position);
+            GameEvents.OnEnemyDied?.Invoke(transform.position, _killedByPlayer);
 
             //TODO: Object Pool eklenince aşağıdaki destor değişecek yerine OnDespawn(); ve Wave maanagerdan pool referansı gelecek
             Destroy(gameObject);
         }
 
+        public float GetCurrentHealth()
+        {
+            return currentHealth;
+        }
+        public void MarkAsKilledByPlayer()
+        {
+            _killedByPlayer = true;
+        }
         private void Start()
         {
             //Pool system geldipğinde Start() kaldır OnSpawn her spawnda zaten çağrılacak
