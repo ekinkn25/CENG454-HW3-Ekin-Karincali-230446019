@@ -22,19 +22,11 @@ namespace CoreBreach.Player
         public void Fire(Vector3 origin, Vector3 direction)
         {
             if (_fireCooldown > 0f) return;
-            // if (projectilePrefab == null)
-            // {
-            //     Debug.LogWarning("[BasicWeapon] Projectile Prefab atanmamış!");
-            //     return;
-            // }
             Projectile projectile = ProjectilePool.Instance.GetFromPool();
-
-            // GameObject projectileObj = Instantiate(projectilePrefab, origin, Quaternion.identity);
             //Instantiate komutu prefabrik projectile'ı alır ve sahneye gerçek bir obje üretilmesini sağlar, üretilen objenin içindeki projectile scriptini bulur ve Initialize metodu çağrılarak mermi hareketine başlatılır
             //bu işlem CPU için maliyetli ileride bu kısmı Object Pool kullanarak revize edilebilir
             // TODO: Replace with ObjectPool
 
-            // Projectiles.Projectile projectile = projectileObj.GetComponent<Projectiles.Projectile>();
             if (projectile == null)
             {
                 Debug.LogError("[BasicWeapon] Pool'dan mermi alınamadı!");
