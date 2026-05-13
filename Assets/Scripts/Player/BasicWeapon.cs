@@ -25,7 +25,6 @@ namespace CoreBreach.Player
             Projectile projectile = ProjectilePool.Instance.GetFromPool();
             //Instantiate komutu prefabrik projectile'ı alır ve sahneye gerçek bir obje üretilmesini sağlar, üretilen objenin içindeki projectile scriptini bulur ve Initialize metodu çağrılarak mermi hareketine başlatılır
             //bu işlem CPU için maliyetli ileride bu kısmı Object Pool kullanarak revize edilebilir
-            // TODO: Replace with ObjectPool
 
             if (projectile == null)
             {
@@ -33,10 +32,6 @@ namespace CoreBreach.Player
                 return;
             }
 
-            // if (projectile != null)
-            // {
-            //     projectile.Initialize(direction, GetDamage());
-            // }
             Vector3 spawnPosition = origin + Vector3.up * 0.5f;
             projectile.transform.position = spawnPosition;
             projectile.transform.rotation = Quaternion.LookRotation(direction);

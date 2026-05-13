@@ -15,7 +15,7 @@ namespace CoreBreach.Enemies
 
         
         //IPoolable -it will call when you pull on pool- life and flag become zero
-        //pool manager will call this method automatically
+        //wave manager will call this method automatically
         public void OnSpawn()
         {
             _killedByPlayer = false;
@@ -25,11 +25,19 @@ namespace CoreBreach.Enemies
             Debug.Log($"[Enemy Health] did spawn. Life: {currentHealth}");
         }
         
-        //called when it turneds back to pool 
         public void OnDespawn()
         {
             gameObject.SetActive(false);
             Debug.Log($"[EnemyHealth] returned to ppol : {gameObject.name}");
+            Destroy(gameObject);
+        }
+
+        private void Start()
+        {
+            // EnemyPool yazılınca bu Start() kaldırılacak
+            // Pool, spawn ederken OnSpawn()'ı kendisi çağıracak
+            // TODO: EnemyPool eklenince Start()'ı sil
+            OnSpawn();
         }
 
 
@@ -56,12 +64,10 @@ namespace CoreBreach.Enemies
         private void HandleDeath()
         {
             Debug.Log($"[EnemyHealth] Enemy died: {gameObject.name}");
-
             //OBSERVER: WaveManager kalan düşman sayısını azaltır Score MAnager puan ekler HUDController Score günceller ama bu sınıf onların hiç birini tanımıypr sadece duyuruyor
+            
             GameEvents.OnEnemyDied?.Invoke(transform.position, _killedByPlayer);
-
-            //TODO: Object Pool eklenince aşağıdaki destor değişecek yerine OnDespawn(); ve Wave maanagerdan pool referansı gelecek
-            Destroy(gameObject);
+            OnSpawn();
         }
 
         public float GetCurrentHealth()
@@ -71,12 +77,6 @@ namespace CoreBreach.Enemies
         public void MarkAsKilledByPlayer()
         {
             _killedByPlayer = true;
-        }
-        private void Start()
-        {
-            //Pool system geldipğinde Start() kaldır OnSpawn her spawnda zaten çağrılacak
-            currentHealth = maxHealth;
-            _isDead = false;
         }
 
         [ContextMenu("Test: 10 hasar ver")]

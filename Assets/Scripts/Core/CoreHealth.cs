@@ -37,6 +37,7 @@ namespace CoreBreach.Core
             if (IsDead())
             {
                 _isDead = true;
+                GameEvents.IsGameOver = true;
                 Debug.Log("[CoreHealth] CORE DESTROYED!");
                 GameEvents.OnCoreDead?.Invoke();
             }
