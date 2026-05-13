@@ -14,7 +14,7 @@ namespace CoreBreach.Patterns.Decorator
         {
             // check if wrapped weapon is BasicWeapon
             // Pattern: "is" ile tip kontrolü — concrete tipe bağımlılık minimum
-            _basicWeapon = wrapped as BasicWeapon;
+            _basicWeapon = UnwrapToBasicWeapon(wrapped);
 
             if (_basicWeapon != null)
             {
@@ -38,6 +38,18 @@ namespace CoreBreach.Patterns.Decorator
                 _basicWeapon.FireRate = _originalFireRate;
                 Debug.Log("[RapidFireDecorator] Hız eski değerine döndü.");
             }
+        }
+
+        private BasicWeapon UnwrapToBasicWeapon(IWeaponBehavior weapon)
+        {
+            // Direkt BasicWeapon mı?
+            if (weapon is BasicWeapon bw) return bw;
+
+            // Decorator mı? İçini aç, tekrar kontrol et
+            if (weapon is WeaponDecorator decorator)
+                return UnwrapToBasicWeapon(decorator._wrapped);
+
+            return null;
         }
     }
 }
