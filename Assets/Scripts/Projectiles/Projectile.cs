@@ -45,19 +45,16 @@ namespace CoreBreach.Projectiles
             _rb.angularVelocity = Vector3.zero;  
             _collider.enabled   = false;
             gameObject.SetActive(false);
-
         }
 
         public void Initialize(Vector3 direction, float damage) //does an dependency injection
         {
-            // _direction = direction.normalized;
             _damage = damage;
             _rb.linearVelocity = direction.normalized * speed;
         }
 
         private void Update()
         {
-            // transform.position += _direction * speed * Time.deltaTime;
             if (GameEvents.IsGameOver)
             {
                 ReturnToPool();
@@ -65,6 +62,7 @@ namespace CoreBreach.Projectiles
             }
 
             _lifetimeTimer -= Time.deltaTime;
+            
             if (_lifetimeTimer <= 0f)
             {
                 ReturnToPool();
@@ -76,8 +74,6 @@ namespace CoreBreach.Projectiles
             if (_hasHit) return;
             if (GameEvents.IsGameOver){ ReturnToPool(); return; }
             if (other.CompareTag("Player")) return;
-
-            // Debug.Log($"[Projectile] Hitted: {other.name} | Tag: {other.tag}");
 
             IDamageable damageable = other.GetComponent<IDamageable>();
 
