@@ -12,7 +12,7 @@ namespace CoreBreach.Patterns.Decorator
     public abstract class WeaponDecorator : IWeaponBehavior
     {
         // Protected: accessible for sub classes
-        protected readonly IWeaponBehavior _wrapped;
+        internal readonly IWeaponBehavior _wrapped;
 
         protected WeaponDecorator(IWeaponBehavior wrapped)
         {

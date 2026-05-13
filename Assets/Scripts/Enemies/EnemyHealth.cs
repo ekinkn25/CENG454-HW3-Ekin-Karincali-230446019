@@ -1,7 +1,6 @@
 using UnityEngine;
 using CoreBreach.Interfaces;
 using CoreBreach.Patterns.Observer;
-using System.Xml.Serialization;
 
 namespace CoreBreach.Enemies
 {
@@ -67,7 +66,7 @@ namespace CoreBreach.Enemies
             //OBSERVER: WaveManager kalan düşman sayısını azaltır Score MAnager puan ekler HUDController Score günceller ama bu sınıf onların hiç birini tanımıypr sadece duyuruyor
             
             GameEvents.OnEnemyDied?.Invoke(transform.position, _killedByPlayer);
-            OnSpawn();
+            OnDespawn();
         }
 
         public float GetCurrentHealth()
