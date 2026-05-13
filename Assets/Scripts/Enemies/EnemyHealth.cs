@@ -19,6 +19,7 @@ namespace CoreBreach.Enemies
         //pool manager will call this method automatically
         public void OnSpawn()
         {
+            _killedByPlayer = false;
             currentHealth = maxHealth;
             _isDead = false;
             gameObject.SetActive(true);
