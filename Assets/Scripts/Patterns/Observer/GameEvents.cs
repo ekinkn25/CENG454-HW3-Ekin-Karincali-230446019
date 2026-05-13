@@ -35,8 +35,7 @@ namespace CoreBreach.Patterns.Observer
         //who fires: EnemyHealth.TakeDamage()
         //who listens: ScoreManager, WaveManager(remainin number)
         //TODO: you can add score number for parameter -> Action<Vector3, int>
-        public static Action<Vector3> OnEnemyDied;
-
+        public static Action<Vector3, bool> OnEnemyDied;
 
         //wawe GameEvents
         //it triggers when a wawe is completed

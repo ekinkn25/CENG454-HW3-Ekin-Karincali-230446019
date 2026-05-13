@@ -2,6 +2,7 @@ using UnityEngine;
 using CoreBreach.Interfaces;
 using CoreBreach.Patterns.Observer;
 using CoreBreach.Patterns.Pool;
+using CoreBreach.Enemies;
 
 namespace CoreBreach.Projectiles
 {
@@ -16,6 +17,7 @@ namespace CoreBreach.Projectiles
         private float _lifetimeTimer;
         private Rigidbody _rb;
         private Collider  _collider;
+        private bool _hasHit = false;
 
         private void Awake()
         {
@@ -27,6 +29,7 @@ namespace CoreBreach.Projectiles
 
         public void OnSpawn()
         {
+            _hasHit = false;
             _lifetimeTimer=lifetime;
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
@@ -43,7 +46,6 @@ namespace CoreBreach.Projectiles
             _collider.enabled   = false;
             gameObject.SetActive(false);
 
-            Debug.Log("[Projectile] Havuza döndü."); 
         }
 
         public void Initialize(Vector3 direction, float damage) //does an dependency injection
@@ -71,25 +73,20 @@ namespace CoreBreach.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (GameEvents.IsGameOver)
-            {
-                ReturnToPool();
-                return;
-            }
-
+            if (_hasHit) return;
+            if (GameEvents.IsGameOver){ ReturnToPool(); return; }
             if (other.CompareTag("Player")) return;
 
-            Debug.Log($"[Projectile] Hitted: {other.name} | Tag: {other.tag}");
+            // Debug.Log($"[Projectile] Hitted: {other.name} | Tag: {other.tag}");
 
             IDamageable damageable = other.GetComponent<IDamageable>();
 
             if (damageable != null)
             {
-                if (damageable.IsDead())
-                {
-                    ReturnToPool();
-                    return;
-                }
+                if (damageable.IsDead()){ ReturnToPool(); return; }
+                EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+                if (enemyHealth != null){ enemyHealth.MarkAsKilledByPlayer();}
+                _hasHit = true;
                 damageable.TakeDamage(_damage);
                 Debug.Log($"[Projectile] gave {other.name} to {_damage} point damages.");
             }
