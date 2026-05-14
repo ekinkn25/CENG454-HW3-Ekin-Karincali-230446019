@@ -2,6 +2,7 @@ using UnityEngine;
 using CoreBreach.Player;
 using CoreBreach.Patterns.Decorator;
 using CoreBreach.Interfaces;
+using System.Collections;
 
 namespace CoreBreach.Player
 {
@@ -10,35 +11,81 @@ namespace CoreBreach.Player
         // Choose which power-up on inspector
         public enum PickupType { DoubleDamage, RapidFire }
 
+        [Header("Pickup Ayarları")]
         [SerializeField] private PickupType pickupType = PickupType.DoubleDamage;
 
         // TODO: Timer sistemi eklenince decorator otomatik kalkacak
         [SerializeField] private float duration = 10f;
+        [SerializeField] private float      rotationSpeed = 90f;
+        private bool _isPickedUp = false;
+
+        private void Update()
+        {
+             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        }
 
         private void OnTriggerEnter(Collider other)
         {
+            if(_isPickedUp) return;
             if (!other.CompareTag("Player")) return;
 
             PlayerShooter shooter = other.GetComponent<PlayerShooter>();
             if (shooter == null) return;
 
-            IWeaponBehavior current = shooter.GetCurrentWeapon();
+            _isPickedUp = true;
 
+            // Mevcut silahı kaydet — süre bitince geri yüklenecek
+            IWeaponBehavior originalWeapon = shooter.GetCurrentWeapon();
+
+            // Seçilen decorator'ı oluştur ve uygula
+            IWeaponBehavior newWeapon = CreateDecorator(originalWeapon);
+            shooter.SetWeapon(newWeapon);
+
+            Debug.Log($"[WeaponPickup] {pickupType} aktif! Süre: {duration}s");
+            
+            // Süre sınırı varsa geri al
+            if (duration > 0f)
+            {
+                StartCoroutine(RevertAfterDuration(shooter, originalWeapon, newWeapon));
+            }
+
+            // Pickup görselini gizle
+            gameObject.SetActive(false);
+        }
+
+        private IWeaponBehavior CreateDecorator(IWeaponBehavior current)
+        {
             switch (pickupType)
             {
                 case PickupType.DoubleDamage:
-                    shooter.SetWeapon(new DoubleDamageDecorator(current));
-                    Debug.Log("[WeaponPickup] DoubleDamage aktif!");
-                    break;
+                    return new DoubleDamageDecorator(current);
 
                 case PickupType.RapidFire:
-                    shooter.SetWeapon(new RapidFireDecorator(current));
-                    Debug.Log("[WeaponPickup] RapidFire aktif!");
-                    break;
+                    return new RapidFireDecorator(current);
+
+                default:
+                    return current;
+            }
+        }
+
+        // Süre bitince orijinal silaha geri dön
+        private IEnumerator RevertAfterDuration(
+            PlayerShooter shooter,
+            IWeaponBehavior originalWeapon,
+            IWeaponBehavior decoratedWeapon)
+        {
+            yield return new WaitForSeconds(duration);
+
+            // RapidFire ise ateş hızını geri yükle
+            if (decoratedWeapon is RapidFireDecorator rapidFire)
+            {
+                rapidFire.Revert();
             }
 
-            // disable pickup : it can only used once
-            gameObject.SetActive(false);
+            // Orijinal silaha geri dön
+            shooter.SetWeapon(originalWeapon);
+
+            Debug.Log($"[WeaponPickup] {pickupType} süresi doldu, orijinal silaha dönüldü.");
         }
     }
 }
