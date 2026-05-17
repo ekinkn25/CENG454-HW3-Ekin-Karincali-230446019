@@ -45,7 +45,7 @@ namespace CoreBreach.Player
         {
             return BaseDamage;
         }
-        public float FireRate                           // ← bunu ekle
+        public float FireRate
         {
             get => fireRate;
             set => fireRate = value;
