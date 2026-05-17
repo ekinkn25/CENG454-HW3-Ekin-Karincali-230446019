@@ -1,4 +1,4 @@
-## build with
+## Build with
 - Unity 6 (6000.3.7f1)
 - C# / .NET
 - Unity UI (TextMeshPro)
