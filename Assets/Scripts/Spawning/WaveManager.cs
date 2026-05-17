@@ -17,6 +17,9 @@ namespace CoreBreach.Spawning
         [SerializeField] private Transform[]  spawnPoints;
         [SerializeField] private Transform    coreTransform;
 
+        [Header("Enemy Settings")]
+        [SerializeField]  private float enemySpeed = 3f;
+
         //Current wave status
         private int  _currentWaveIndex   = 0;
         private int  _remainingEnemies   = 0;
@@ -57,6 +60,7 @@ namespace CoreBreach.Spawning
         private void HandleEnemyDied(Vector3 position, bool killedByPlayer)
         {
             if (_allWavesDone) return;
+            if (GameEvents.IsGameOver) return;
 
             _remainingEnemies--;
             Debug.Log($"[WaveManager] Remaining enemies: {_remainingEnemies}");
@@ -105,6 +109,12 @@ namespace CoreBreach.Spawning
         private IEnumerator CompleteWave()
         {
             if (_allWavesDone) yield break;
+
+            if (GameEvents.IsGameOver)
+            {
+                Debug.Log("[WaveManager] Core is destroyed.");
+                yield break;
+            }
 
             WaveData completedWave = waves[_currentWaveIndex];
             Debug.Log($"[WaveManager] Wave {completedWave.waveNumber} is finished!");
@@ -165,7 +175,7 @@ namespace CoreBreach.Spawning
             EnemyController controller = enemyObj.GetComponent<EnemyController>();
             if (controller != null)
             {
-                float speed = 3f;
+                float speed = enemySpeed;
 
                 switch (wave.strategyType)
                 {

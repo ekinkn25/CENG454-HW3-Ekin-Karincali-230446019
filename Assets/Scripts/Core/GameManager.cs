@@ -30,7 +30,7 @@ namespace CoreBreach.Core
         {
             // Clear all events at the start of the scene
             // Reset subscribers left over from the previous scene
-            GameEvents.ResetAllEvents();
+            // GameEvents.ResetAllEvents();
 
             // Start with panels are off
             if (winPanel  != null) winPanel.SetActive(false);
