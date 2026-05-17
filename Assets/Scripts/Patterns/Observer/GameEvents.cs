@@ -50,6 +50,7 @@ namespace CoreBreach.Patterns.Observer
         //who listens: GameManager (wining screen)
         //TODO when WaveManager added, invoke that event from there
         public static Action OnGameWon;
+        public static Action<int> OnWaveStarted;
 
 
         //security: cleaning in screen changes
@@ -63,6 +64,7 @@ namespace CoreBreach.Patterns.Observer
             OnCoreDead          = null;
             OnEnemyDied         = null;
             OnWaveCompleted     = null;
+            OnWaveStarted       = null;
             OnGameWon           = null;
 
             Debug.Log("[GameEvents] All events cleaned.");

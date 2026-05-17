@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f155a4e3b8f40447b7b7206e71b7da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoreBreach.Interfaces.EnemyController
-  moveSpeed: 1000
+  moveSpeed: 100
   coreTransform: {fileID: 1965464983740299695, guid: b4cb9d3eb01fc794fa42457fce119db4, type: 3}
 --- !u!54 &1511425758677375853
 Rigidbody:
