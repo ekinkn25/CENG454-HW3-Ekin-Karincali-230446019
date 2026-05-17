@@ -1,5 +1,6 @@
 using UnityEngine;
 using CoreBreach.Interfaces;
+using CoreBreach.Patterns.Observer;
 
 namespace CoreBreach.Player
 {
@@ -24,6 +25,7 @@ namespace CoreBreach.Player
 
         private void Update()
         {
+            if (GameEvents.IsGameOver) return;
             if (Input.GetMouseButton(0)) //fare sol tuş basılı olduğu sürece true dönüyor
             {
                 Vector3 mouseWorldPosition = GetMouseWorldPosition();
