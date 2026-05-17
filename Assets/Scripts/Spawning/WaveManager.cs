@@ -94,7 +94,7 @@ namespace CoreBreach.Spawning
                 hudController.ShowWaveAnnouncement(wave.waveNumber, 5f);
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
 
             if (GameEvents.IsGameOver) yield break;
 

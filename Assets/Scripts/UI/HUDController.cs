@@ -62,7 +62,7 @@ namespace CoreBreach.UI
         // //TODO: WaveMAnager yazılında bu event otomatik gelecek
         private void HandleWaveCompleted(int waveNumber)
         {
-            UpdateWaveText(waveNumber +1);
+            // UpdateWaveText(waveNumber +1);
             Debug.Log($"[HUDController] Wave is updated: {waveNumber +1}");
         }
 
