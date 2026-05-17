@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using CoreBreach.Enemies;
 using CoreBreach.Interfaces;
 using CoreBreach.Patterns.Observer;
+using CoreBreach.UI;
 
 namespace CoreBreach.Spawning
 {
@@ -16,15 +16,24 @@ namespace CoreBreach.Spawning
         [SerializeField] private GameObject   enemyPrefab;
         [SerializeField] private Transform[]  spawnPoints;
         [SerializeField] private Transform    coreTransform;
+        [SerializeField] private float       enemySpeed = 5f;
 
-        [Header("Enemy Settings")]
-        [SerializeField]  private float enemySpeed = 3f;
+        [Header("Power-Up Management")]
+        [SerializeField] private GameObject  doubleDamagePrefab;
+        [SerializeField] private GameObject  rapidFirePrefab;
+        [SerializeField] private Transform[] powerUpSpawnPoints;
+
+        [Header("HUD")]
+        [SerializeField] private HUDController hudController;
+
 
         //Current wave status
         private int  _currentWaveIndex   = 0;
         private int  _remainingEnemies   = 0;
         private bool _isSpawning         = false;
         private bool _allWavesDone       = false;
+        private GameObject _activePowerUpA;
+        private GameObject _activePowerUpB;
 
         // ---------------------------------------------
         // UNITY LIFECYCLE
@@ -79,8 +88,22 @@ namespace CoreBreach.Spawning
         private IEnumerator StartWave(int waveIndex)
         {
             WaveData wave = waves[waveIndex];
+
+            if (hudController != null)
+            {
+                hudController.ShowWaveAnnouncement(wave.waveNumber, 5f);
+            }
+
+            yield return new WaitForSeconds(5f);
+
+            if (GameEvents.IsGameOver) yield break;
+
             _remainingEnemies = wave.enemyCount;
             _isSpawning       = true;
+
+            GameEvents.OnWaveStarted?.Invoke(wave.waveNumber);
+
+            RespawnPowerUps();
 
             Debug.Log($"[WaveManager] Wave {wave.waveNumber} starting. Enemies: {wave.enemyCount}");
 
@@ -117,6 +140,7 @@ namespace CoreBreach.Spawning
             }
 
             WaveData completedWave = waves[_currentWaveIndex];
+            GameEvents.OnWaveCompleted?.Invoke(completedWave.waveNumber);
             Debug.Log($"[WaveManager] Wave {completedWave.waveNumber} is finished!");
 
             // Is there a next wave session?
@@ -132,9 +156,10 @@ namespace CoreBreach.Spawning
             }
 
             // A break between waves
-            float breakTime = completedWave.breakDuration;
-            Debug.Log($"[WaveManager] Next wave starting in {breakTime} seconds...");
-            yield return new WaitForSeconds(breakTime);
+            // float breakTime = completedWave.breakDuration;
+            // Debug.Log($"[WaveManager] Next wave starting in {breakTime} seconds...");
+            // yield return new WaitForSeconds(breakTime);
+            yield return new WaitForSeconds(completedWave.breakDuration);
 
             if (!GameEvents.IsGameOver)
             {
@@ -175,24 +200,23 @@ namespace CoreBreach.Spawning
             EnemyController controller = enemyObj.GetComponent<EnemyController>();
             if (controller != null)
             {
-                float speed = enemySpeed;
 
                 switch (wave.strategyType)
                 {
                     case WaveData.StrategyType.Direct:
-                        controller.SetStrategy(new DirectMoveStrategy(speed));
+                        controller.SetStrategy(new DirectMoveStrategy(enemySpeed));
                         break;
 
                     case WaveData.StrategyType.Zigzag:
-                        controller.SetStrategy(new ZigzagMoveStrategy(speed));
+                        controller.SetStrategy(new ZigzagMoveStrategy(enemySpeed));
                         break;
 
                     case WaveData.StrategyType.Mixed:
                         // Rastgele Direct veya Zigzag
                         if (Random.value > 0.5f)
-                            controller.SetStrategy(new DirectMoveStrategy(speed));
+                            controller.SetStrategy(new DirectMoveStrategy(enemySpeed));
                         else
-                            controller.SetStrategy(new ZigzagMoveStrategy(speed));
+                            controller.SetStrategy(new ZigzagMoveStrategy(enemySpeed));
                         break;
                 }
 
@@ -201,6 +225,29 @@ namespace CoreBreach.Spawning
             }
 
             Debug.Log($"[WaveManager] Enemy spawned: {spawnPoint.name} | Strategy: {wave.strategyType}");
+        }
+        private void RespawnPowerUps()
+        {
+            if (powerUpSpawnPoints == null || powerUpSpawnPoints.Length < 2) return;
+
+            // Eskilerini temizle
+            if (_activePowerUpA != null) Destroy(_activePowerUpA);
+            if (_activePowerUpB != null) Destroy(_activePowerUpB);
+
+            // 2 rastgele farklı nokta seç
+            int indexA = Random.Range(0, powerUpSpawnPoints.Length);
+            int indexB;
+            do { indexB = Random.Range(0, powerUpSpawnPoints.Length); }
+            while (indexB == indexA);
+
+            // Power-up'ları spawn et
+            if (doubleDamagePrefab != null)
+                _activePowerUpA = Instantiate(doubleDamagePrefab, powerUpSpawnPoints[indexA].position, Quaternion.identity);
+
+            if (rapidFirePrefab != null)
+                _activePowerUpB = Instantiate(rapidFirePrefab, powerUpSpawnPoints[indexB].position, Quaternion.identity);
+
+            Debug.Log("[WaveManager] Power-up'lar yenilendi.");
         }
     }
 }

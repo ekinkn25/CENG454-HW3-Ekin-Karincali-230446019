@@ -1,9 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using CoreBreach.Patterns.Observer;
-using Unity.VisualScripting;
-using System.Xml.Serialization;
 
 namespace CoreBreach.UI
 {
@@ -17,6 +16,8 @@ namespace CoreBreach.UI
 
         [Header("Score")]
         [SerializeField] private TextMeshProUGUI scoreText;
+        [Header("Wave Announcement")]
+        [SerializeField] private TextMeshProUGUI waveAnnouncementText;
 
         private int _currentScore = 0;
 
@@ -29,6 +30,7 @@ namespace CoreBreach.UI
             GameEvents.OnCoreHealthChanged += HandleCoreHealtChanged;
             GameEvents.OnWaveCompleted += HandleWaveCompleted;
             GameEvents.OnEnemyDied += HandleEnemyDied;
+            GameEvents.OnWaveStarted += HandleWaveStarted;
             Debug.Log("[HUDController] is subscribed to GameEvents.");
         }
 
@@ -37,6 +39,7 @@ namespace CoreBreach.UI
             GameEvents.OnCoreHealthChanged -= HandleCoreHealtChanged;
             GameEvents.OnWaveCompleted -= HandleWaveCompleted;
             GameEvents.OnEnemyDied -= HandleEnemyDied;
+            GameEvents.OnWaveStarted -= HandleWaveStarted;
             Debug.Log("[HUDController] is unsubscribed to GameEvents.");
         }
         private void Start()
@@ -101,6 +104,34 @@ namespace CoreBreach.UI
                 return;
             }
             scoreText.text = $"Score: {_currentScore}";
+        }
+        private void HandleWaveStarted(int waveNumber)
+        {
+            UpdateWaveText(waveNumber);
+            Debug.Log($"[HUDController] Wave güncellendi: {waveNumber}");
+        }
+        public void ShowWaveAnnouncement(int waveNumber, float duration = 3f)
+        {
+            StartCoroutine(WaveAnnouncementCoroutine(waveNumber, duration));
+        }
+
+        private IEnumerator WaveAnnouncementCoroutine(int waveNumber, float duration)
+        {
+            if (waveAnnouncementText == null) yield break;
+
+            waveAnnouncementText.text    = $"Wave {waveNumber} Başlıyor!";
+            waveAnnouncementText.gameObject.SetActive(true);
+
+            // Geri sayım göster
+            float timer = duration;
+            while (timer > 0f)
+            {
+                waveAnnouncementText.text = $"Wave {waveNumber}\n{Mathf.CeilToInt(timer)} saniye sonra başlıyor...";
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+
+            waveAnnouncementText.gameObject.SetActive(false);
         }
     }
 }
